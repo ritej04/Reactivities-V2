@@ -1,5 +1,5 @@
 import { Group } from "@mui/icons-material";
-import { AppBar, Box, Container, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
 import MenuItemLink from "../shared/components/MenuItemLink";
 export default function NavBar() {

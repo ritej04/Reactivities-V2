@@ -12,10 +12,10 @@ const sleep = (delay: number) => {
 const agent = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
 });
-agent.interceptors.response.use(config => {
+agent.interceptors.request.use(config => {
     store.uiStore.isBusy();
     return config;
-})
+});
 agent.interceptors.response.use(async response => {
     await sleep(1000);
     store.uiStore.isIdle();

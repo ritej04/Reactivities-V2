@@ -17,6 +17,7 @@ export const useActivities = (id? : string) => {
         enabled : !id && location.pathname === '/activities' && !!currentUser,
         select:data => {
             return data.map(activity => {
+                
                 return{
                     ...activity,
                     isHost: currentUser?.id === activity.hostId,

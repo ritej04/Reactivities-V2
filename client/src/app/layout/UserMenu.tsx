@@ -33,12 +33,14 @@ export default function UserMenu() {
         sx={{ fontSize: '1.1rem' }}
       >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Avatar />
+        <Avatar 
+        src={currentUser?.imageUrl}
+        alt='current user image'/>
         {currentUser?.displayName}
        </Box>
       </Button>
       <Menu
-        id={menuId}
+        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -54,7 +56,7 @@ export default function UserMenu() {
           </ListItemIcon>
           <ListItemText>Create Activity</ListItemText>
         </MenuItem>
-        <MenuItem component={Link} to="/profile" onClick={handleClose}>
+        <MenuItem component={Link} to={`/profiles/${currentUser?.id}`} onClick={handleClose}>
           <ListItemIcon>
             <Person/>
           </ListItemIcon>

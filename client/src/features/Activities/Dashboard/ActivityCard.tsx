@@ -9,13 +9,13 @@ type props = {
 };
 export default function ActivityCard({ activity }: props) {
     const label = activity.isHost ? 'You are hosting' : 'You are going ';
-    const isCancelled = false;
     const color = activity.isHost ? 'secondary' : activity.isGoing ? 'warning' : 'default';
     return (
         <Card elevation={3} sx={{ borderRadius: 3 }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <CardHeader
-                    avatar={<Avatar sx={{ height: 80, width: 80 }} />}
+                    avatar={<Avatar src={activity.hostImageUrl} sx={{ height: 80, width: 80 }} 
+                    alt="image of host"/>}
                     title={activity.title}
                     titleTypographyProps={{
                         fontWeight: 'bold',

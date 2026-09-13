@@ -5,6 +5,7 @@ using MediatR;
 using Application.Activities.Commands;
 using Application.Activities.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using Application.Core;
 
 
 namespace API.Controllers;
@@ -12,9 +13,10 @@ namespace API.Controllers;
 public class ActivitiesController : BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<List<ActivityDto>>> GetActivities()
+    public async Task<ActionResult<PagedList<ActivityDto,DateTime?>>> GetActivities(
+        [FromQuery]ActivityParams activityParams)
     {
-        return await Mediator.Send(new GetActivityList.Query());
+        return HandleResult(await Mediator.Send(new GetActivityList.Query{Params= activityParams}));
     }
     [HttpGet("{id}")]
     public async Task<ActionResult<ActivityDto>> GetActivityDetail(string id)

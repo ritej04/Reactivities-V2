@@ -1,9 +1,11 @@
 import { Avatar, Box, Button, Chip, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-type Props ={
-    profile:Profile
-}
-export default function ProfileHeader({profile}:Props) {
-    const isFollowing = true;
+import { useProfile } from "../../lib/hooks/useProfile";
+import { useParams } from "react-router";
+
+export default function ProfileHeader() {
+    const {id} = useParams();
+    const {isCurrentUser,profile,updateFollowing}=useProfile(id);
+    if (!profile) return null;
   return (
     <Paper elevation={3} sx={{p:4, borderRadius:3}}>
         <Grid container spacing={2}>
@@ -15,7 +17,7 @@ export default function ProfileHeader({profile}:Props) {
                     sx={{width:150,height:150}}/>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                         <Typography variant="h4">{profile.displayName}</Typography>
-                        {isFollowing && <Chip variant="outlined" color="secondary" label='Following'/>}
+                        {profile.following && <Chip variant="outlined" color="secondary" label='Following'/>}
                     </Box>
                 </Stack>
             </Grid>
@@ -24,18 +26,26 @@ export default function ProfileHeader({profile}:Props) {
                     <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h6">Followers</Typography>
-                            <Typography variant="h3">5</Typography>
+                            <Typography variant="h3">{profile.followersCount}</Typography>
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h6">Following</Typography>
-                            <Typography variant="h3">42</Typography>
+                            <Typography variant="h3">{profile.followingCount}</Typography>
                         </Box>
                     </Box>
+                    {!isCurrentUser && 
+                    <>
                     <Divider sx={{width:'100%'}}/>
                     <Button
-                        fullWidth variant="outlined" color={isFollowing ? 'error' :'success'}>
-                            {isFollowing ? 'Unfollow' : 'Follow'}
+                    onClick={() => updateFollowing.mutate()}
+                    disabled={updateFollowing.isPending}
+                        fullWidth
+                        variant="outlined" 
+                        color={profile.following ? 'error' :'success'}>
+                            {profile.following ? 'Unfollow' : 'Follow'}
                     </Button>
+                    </>}
+                    
                 </Stack>
             </Grid>
         </Grid>
